@@ -68,13 +68,13 @@ const StakeSushi: React.FC<StakeProps> = ({}) => {
               <Button
                 disabled={requestedApproval}
                 onClick={handleApprove}
-                text={`Approve SUSHI`}
+                text={`Stake TITYS`}
               />
             ) : (
               <>
                 <Button
                   disabled={tokenBalance.eq(new BigNumber(0))}
-                  text="Convert to xSUSHI"
+                  text="Stake"
                   onClick={onPresentDeposit}
                 />
                 <StyledActionSpacer/>
