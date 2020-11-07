@@ -12,9 +12,10 @@ import SushiIcon from '../../../components/SushiIcon'
 import useAllEarnings from '../../../hooks/useAllEarnings'
 import useAllStakedValue from '../../../hooks/useAllStakedValue'
 import useFarms from '../../../hooks/useFarms'
+import useStakedBalance from '../../../hooks/useStakedBalance'
 import useTokenBalance from '../../../hooks/useTokenBalance'
 import useSushi from '../../../hooks/useSushi'
-import { getSushiAddress, getSushiSupply } from '../../../sushi/utils'
+import { getSushiAddress, getSushiSupply, getStaked } from '../../../sushi/utils'
 import { getBalanceNumber } from '../../../utils/formatBalance'
 
 const PendingRewards: React.FC = () => {
@@ -73,8 +74,9 @@ const Balances: React.FC = () => {
   const [totalSupply, setTotalSupply] = useState<BigNumber>()
   const sushi = useSushi()
   const sushiBalance = useTokenBalance(getSushiAddress(sushi))
-  const { account, ethereum }: { account: any; ethereum: any } = useWallet()
 
+  const { account, ethereum }: { account: any; ethereum: any } = useWallet()
+  let result = getStaked(sushi, account)
   useEffect(() => {
     async function fetchTotalSupply() {
       const supply = await getSushiSupply(sushi)
@@ -111,18 +113,19 @@ const Balances: React.FC = () => {
       </Card>
       <Spacer />
 
-      <Card>
-        <CardContent>
-          <Label text="Total JUICY Supply" />
-          <Value
-            value={totalSupply ? getBalanceNumber(totalSupply) : 'Locked'}
-          />
-        </CardContent>
-        <Footnote>
-          New rewards per block
-          <FootnoteValue>100 JUICY</FootnoteValue>
-        </Footnote>
-      </Card>
+
+<Card>
+  <CardContent>
+    <Label text="Total JUICY Supply" />
+    <Value
+      value={totalSupply ? getBalanceNumber(totalSupply) : 'Locked'}
+    />
+  </CardContent>
+  <Footnote>
+    New rewards per block
+    <FootnoteValue>100 JUICY</FootnoteValue>
+  </Footnote>
+</Card>
     </StyledWrapper>
   )
 }

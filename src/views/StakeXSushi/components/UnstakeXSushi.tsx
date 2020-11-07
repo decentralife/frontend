@@ -1,3 +1,4 @@
+import BigNumber from 'bignumber.js'
 import React, {useState} from 'react'
 import styled from 'styled-components'
 import Button from '../../../components/Button'
@@ -19,6 +20,7 @@ interface HarvestProps {
 }
 
 const UnstakeXSushi: React.FC<HarvestProps> = ({lpContract}) => {
+  const [totalSupply, setTotalSupply] = useState<BigNumber>()
 
   const xSushiBalance = useTokenBalance(lpContract.options.address)
   const [pendingTx, setPendingTx] = useState(false)
@@ -41,8 +43,7 @@ const UnstakeXSushi: React.FC<HarvestProps> = ({lpContract}) => {
         <StyledCardContentInner>
           <StyledCardHeader>
             <CardIcon>🍣</CardIcon>
-            <Value value={getBalanceNumber(xSushiBalance)}/>
-            <Label text="xSUSHI (SushiBar) Available"/>
+            <Value value={"Unstake"}/>
           </StyledCardHeader>
           <StyledCardActions>
             <Button

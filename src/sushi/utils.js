@@ -135,6 +135,9 @@ export const approveAddress = async (lpContract, address, account) => {
 export const getSushiSupply = async (sushi) => {
   return new BigNumber(await sushi.contracts.sushi.methods.totalSupply().call())
 }
+export const getStakingBalance = async (sushi) => {
+  return new BigNumber(await sushi.contracts.sushi.methods.stakingBalance().call())
+}
 
 export const getXSushiSupply = async (sushi) => {
   return new BigNumber(await sushi.contracts.xSushiStaking.methods.totalSupply().call())
@@ -175,10 +178,10 @@ export const harvest = async (masterChefContract, pid, account) => {
     })
 }
 
-export const getStaked = async (masterChefContract, pid, account) => {
+export const getStaked = async (masterChefContract, account) => {
   try {
     const { amount } = await masterChefContract.methods
-      .userInfo(pid, account)
+      .stakingBalance(account)
       .call()
     return new BigNumber(amount)
   } catch {
